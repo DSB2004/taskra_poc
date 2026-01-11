@@ -6,20 +6,19 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model Organisations{
-  id String @id @default(cuid())
+model Organisations {
+  id             String @id @default(cuid())
   organisationId String @unique
 
   // org info
   name String?
-
 
   leads Leads[]
 
@@ -27,74 +26,62 @@ model Organisations{
   updatedAt DateTime @updatedAt
 }
 
-
-model Users{
-  id String @id @default(cuid())
+model Users {
+  id     String @id @default(cuid())
   userId String @unique
-  
+
   // user info
-  name String?
-  email String?
+  name   String?
+  email  String?
   avatar String?
 
-
   assignedLeads Leads[]
-  
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  
 }
 
-model OrganisationUser{
-    id String @id @default(cuid())
-    userId String 
-    organisationId String 
+model OrganisationUser {
+  id             String @id @default(cuid())
+  userId         String
+  organisationId String
 
-    @@unique([userId,organisationId])
-
+  @@unique([userId, organisationId])
 }
 
-
-
-enum LeadStatus{
+enum LeadStatus {
   IN_PROGRESS
   SUCCESSFUL
   REJECTED
   WARM
 }
-model Leads{
 
-  id String @id @default(cuid())
-  organisationId String 
-  organisation Organisations @relation(fields: [organisationId],references: [organisationId])
+model Leads {
+  id             String        @id @default(cuid())
+  organisationId String
+  organisation   Organisations @relation(fields: [organisationId], references: [organisationId])
 
   //  general details
-  leadOn String 
+  leadOn String
   source String
   status LeadStatus @default(IN_PROGRESS)
 
-
   // lead info
   mobileNo String?
-  email String?
-  website String?
-  name String?
-
+  email    String?
+  website  String?
+  name     String?
 
   // other details
   nextFlowup String?
-  value String? 
-  notes String? @db.Text
+  value      String?
+  notes      String? @db.Text
 
-  assignedToId  String 
-  assignedTo Users @relation(fields: [assignedToId],references: [userId])
-
-
+  assignedToId String
+  assignedTo   Users  @relation(fields: [assignedToId], references: [userId])
 
   isArchived Boolean
-  isDeleted Boolean
+  isDeleted  Boolean
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

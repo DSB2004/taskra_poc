@@ -1,18 +1,13 @@
-import Sidebar from "@/components/sidebar";
+import { OrganisationStore } from "@/store/organisation.store";
 
-export default function HomeLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
-      <main className="flex flex-1  overflow-hidden">
-        <Sidebar></Sidebar>
-        <section className="border-l p-4 overflow-auto flex-1 h-full ">
-          {children}
-        </section>
-      </main>
+      <OrganisationStore>{children}</OrganisationStore>
     </>
   );
 }

@@ -35,7 +35,7 @@ export default function Header() {
 
         <SignedIn>
           <OrganizationSwitcher></OrganizationSwitcher>
-          <UserButton />
+          <UserButton signInUrl="/sign-in" />
         </SignedIn>
       </div>
     </header>
